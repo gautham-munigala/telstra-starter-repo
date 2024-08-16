@@ -36,6 +36,9 @@ public class SimCardActivatorController {
 	@GetMapping("{id}")
 	public ResponseEntity<ResponseDto> getActivationDetails(@PathVariable Long id){
 		ResponseDto dto= service.getDetails(id);
+		if(dto==null) {
+			return new ResponseEntity<ResponseDto>(dto,HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<ResponseDto>(dto,HttpStatus.OK);
 	}
 	
