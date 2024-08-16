@@ -25,6 +25,7 @@ public class SimCardActivatorService {
 	public String request(RequestDto dto) {
 		ActuatorDto actuatorDto=new ActuatorDto(dto.getIccid());
 		ActuatorResponseDto responseDto= restTemplate.postForEntity("http://localhost:8444/actuate", actuatorDto, ActuatorResponseDto.class).getBody();
+		if(responseDto!=null) {
 		if(responseDto.isSuccess()) {
 			SimCardActivator activator=new SimCardActivator(dto.getIccid(),dto.getCustomerEmail(), responseDto.isSuccess());
 			repository.save(activator);
@@ -35,6 +36,8 @@ public class SimCardActivatorService {
 			repository.save(activator);
 			return "Unsuccessful";
 		}
+		}
+		return null;
 	}
 	
 	public ResponseDto getDetails(Long id) {
